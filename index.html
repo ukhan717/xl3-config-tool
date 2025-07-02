@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Config Editor Tool</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2em; }
+      .section { margin-left: 1.5em; border-left: 2px solid #eee; padding-left: 1em; }
+      .collapsible { cursor: pointer; font-weight: bold; }
+      .unknown { background: #ffe0e0; color: #a00; }
+      label { display: block; margin: 0.5em 0 0.2em; }
+      input, select { margin-bottom: 0.5em; }
+      .file-inputs { margin-bottom: 1em; }
+      .download-btn { margin-top: 1em; }
+    </style>
+  </head>
+  <body>
+    <h2>Measurement Device Config Editor</h2>
+    <div class="file-inputs">
+      <label>Load documentation.txt: <input type="file" id="docFile" accept=".txt"></label>
+      <label>Load config (.xl3cfg): <input type="file" id="cfgFile" accept=".xl3cfg"></label>
+    </div>
+    <div id="editor"></div>
+    <button class="download-btn" id="downloadBtn" style="display:none;">Download Modified Config (.xl3cfg)</button>
+    <script>
+      // --- Utility functions ---
+      function parseDocumentation(docText) {
+        // Each line: path.to.param [on | off] or [!float value!], etc.
+        const lines = docText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+        const paramTree = {};
+        const paramTypes = {};
+        for (const line of lines) {
+          const match = line.match(/^([^\s]+)\s+\[(.+)\]$/);
+          if (!match) continue;
+          const path = match[1];
+          const type = match[2];
+          paramTypes[path] = type;
+          // Build tree
+          const parts = path.split('.');
+          let node = paramTree;
+          for (let i = 0; i < parts.length; ++i) {
+            const part = parts[i];
+            if (!node[part]) node[part] = (i === parts.length - 1) ? null : {};
+            node = node[part];
+          }
+        }
+        return { paramTree, paramTypes };
+      }
+
+      function parseConfig(cfgText) {
+        // Find ##CONFIG: and parse the following as JSON
+        const match = cfgText.match(/##CONFIG:\s*([\s\S]*)/);
+        if (!match) throw new Error('No ##CONFIG: section found');
+        const jsonText = match[1].trim();
+        return JSON.parse(jsonText);
+      }
+
+      function getAllPaths(obj, prefix = '') {
+        // Recursively get all dot-separated paths in obj
+        let paths = [];
+        for (const k in obj) {
+          const path = prefix ? prefix + '.' + k : k;
+          if (typeof obj[k] === 'object' && obj[k] !== null && !Array.isArray(obj[k])) {
+            paths = paths.concat(getAllPaths(obj[k], path));
+          } else {
+            paths.push(path);
+          }
+        }
+        return paths;
+      }
+
+      // --- UI rendering ---
+      let paramTypes = {};
+      let paramTree = {};
+      let configObj = {};
+      let unknownPaths = new Set();
+
+      function renderEditor(container, tree, cfg, pathPrefix = '') {
+        for (const key in tree) {
+          const fullPath = pathPrefix ? pathPrefix + '.' + key : key;
+          const isLeaf = tree[key] === null;
+          const value = cfg ? cfg[key] : undefined;
+          const isUnknown = !paramTypes[fullPath];
+          const label = document.createElement('label');
+          label.textContent = key;
+          if (isUnknown) label.classList.add('unknown');
+          if (isLeaf) {
+            let input;
+            if (!isUnknown) {
+              const type = paramTypes[fullPath];
+              if (/^\s*on\s*\|\s*off\s*$/i.test(type)) {
+                input = document.createElement('select');
+                ['on', 'off'].forEach(opt => {
+                  const o = document.createElement('option');
+                  o.value = opt; o.textContent = opt;
+                  input.appendChild(o);
+                });
+                input.value = value ?? 'off';
+              } else if (/^\s*[\w\s|]+\s*\|\s*[\w\s|]+/i.test(type)) {
+                // e.g. [foo | bar | baz]
+                input = document.createElement('select');
+                type.split('|').map(s => s.trim()).forEach(opt => {
+                  const o = document.createElement('option');
+                  o.value = opt; o.textContent = opt;
+                  input.appendChild(o);
+                });
+                input.value = value ?? input.options[0].value;
+              } else if (/!float value!/.test(type)) {
+                input = document.createElement('input');
+                input.type = 'number';
+                input.step = 'any';
+                input.value = value ?? '';
+              } else if (/!signed int\d+ value!/.test(type)) {
+                input = document.createElement('input');
+                input.type = 'number';
+                input.step = '1';
+                input.value = value ?? '';
+              } else {
+                input = document.createElement('input');
+                input.type = 'text';
+                input.value = value ?? '';
+              }
+            } else {
+              input = document.createElement('input');
+              input.type = 'text';
+              input.value = value ?? '';
+              input.classList.add('unknown');
+              unknownPaths.add(fullPath);
+            }
+            input.dataset.path = fullPath;
+            label.appendChild(input);
+            container.appendChild(label);
+          } else {
+            // Collapsible section
+            const section = document.createElement('div');
+            section.className = 'section';
+            const collapser = document.createElement('div');
+            collapser.textContent = key;
+            collapser.className = 'collapsible';
+            collapser.onclick = function() {
+              content.style.display = content.style.display === 'none' ? '' : 'none';
+            };
+            section.appendChild(collapser);
+            const content = document.createElement('div');
+            content.style.display = '';
+            renderEditor(content, tree[key], value || {}, fullPath);
+            section.appendChild(content);
+            container.appendChild(section);
+          }
+        }
+        // Render unknown keys in config not in doc
+        if (cfg && typeof cfg === 'object') {
+          for (const k in cfg) {
+            const fullPath = pathPrefix ? pathPrefix + '.' + k : k;
+            if (!tree[k] && typeof cfg[k] !== 'object') {
+              const label = document.createElement('label');
+              label.textContent = k;
+              label.classList.add('unknown');
+              const input = document.createElement('input');
+              input.type = 'text';
+              input.value = cfg[k];
+              input.dataset.path = fullPath;
+              input.classList.add('unknown');
+              label.appendChild(input);
+              container.appendChild(label);
+              unknownPaths.add(fullPath);
+            } else if (!tree[k] && typeof cfg[k] === 'object') {
+              // Unknown nested object
+              const section = document.createElement('div');
+              section.className = 'section';
+              const collapser = document.createElement('div');
+              collapser.textContent = k + ' (unknown)';
+              collapser.className = 'collapsible unknown';
+              collapser.onclick = function() {
+                content.style.display = content.style.display === 'none' ? '' : 'none';
+              };
+              section.appendChild(collapser);
+              const content = document.createElement('div');
+              content.style.display = '';
+              renderEditor(content, {}, cfg[k], fullPath);
+              section.appendChild(content);
+              container.appendChild(section);
+              unknownPaths.add(fullPath);
+            }
+          }
+        }
+      }
+
+      function collectConfigFromUI(container) {
+        // Recursively collect config from inputs
+        const obj = {};
+        for (const el of container.children) {
+          if (el.tagName === 'LABEL') {
+            const input = el.querySelector('input,select');
+            if (input) {
+              const path = input.dataset.path;
+              const parts = path.split('.');
+              let node = obj;
+              for (let i = 0; i < parts.length - 1; ++i) {
+                if (!node[parts[i]]) node[parts[i]] = {};
+                node = node[parts[i]];
+              }
+              let val = input.value;
+              // Try to cast to number if appropriate
+              if (input.type === 'number' && val !== '') val = Number(val);
+              node[parts[parts.length - 1]] = val;
+            }
+          } else if (el.classList.contains('section')) {
+            const content = el.querySelector('div:not(.collapsible)');
+            const subObj = collectConfigFromUI(content);
+            const key = el.querySelector('.collapsible').textContent.replace(' (unknown)', '');
+            obj[key] = subObj;
+          }
+        }
+        return obj;
+      }
+
+      // --- File loading and event handlers ---
+      document.getElementById('docFile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function() {
+          const { paramTree: tree, paramTypes: types } = parseDocumentation(reader.result);
+          paramTree = tree;
+          paramTypes = types;
+          if (Object.keys(configObj).length) render();
+        };
+        reader.readAsText(file);
+      });
+
+      document.getElementById('cfgFile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function() {
+          try {
+            configObj = parseConfig(reader.result);
+            if (Object.keys(paramTree).length) render();
+          } catch (err) {
+            alert('Error parsing config: ' + err.message);
+          }
+        };
+        reader.readAsText(file);
+      });
+
+      function render() {
+        unknownPaths = new Set();
+        const editor = document.getElementById('editor');
+        editor.innerHTML = '';
+        renderEditor(editor, paramTree, configObj);
+        document.getElementById('downloadBtn').style.display = 'inline-block';
+      }
+
+      document.getElementById('downloadBtn').onclick = function() {
+        const editor = document.getElementById('editor');
+        const newCfg = collectConfigFromUI(editor);
+        const header = '##CONFIG:\n';
+        const json = JSON.stringify(newCfg, null, 2);
+        const blob = new Blob([header + json], {type: 'text/plain'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'modified.xl3cfg';
+        a.click();
+      };
+    </script>
+  </body>
+  </html>

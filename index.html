@@ -21,8 +21,13 @@
       <label>Load config (.xl3cfg): <input type="file" id="cfgFile" accept=".xl3cfg"></label>
     </div>
     <div id="editor"></div>
+    <!-- Add this after <div id="editor"></div> -->
+    <pre id="jsonView" style="background:#f8f8f8; padding:1em; border:1px solid #eee; margin-top:1em; max-height:300px; overflow:auto;"></pre>
     <button class="download-btn" id="downloadBtn" style="display:none;">Download Modified Config (.xl3cfg)</button>
     <script>
+
+
+
       // --- Utility functions ---
       function parseDocumentation(docText) {
         // Each line: path.to.param [on | off] or [!float value!], etc.
@@ -244,17 +249,25 @@
         reader.readAsText(file);
       });
 
+      // Add this function to update the JSON view
+      function updateJsonView(obj) {
+        document.getElementById('jsonView').textContent = JSON.stringify(obj, null, 2);
+      }
+
       function render() {
         unknownPaths = new Set();
         const editor = document.getElementById('editor');
         editor.innerHTML = '';
         renderEditor(editor, paramTree, configObj);
         document.getElementById('downloadBtn').style.display = 'inline-block';
+        updateJsonView(configObj);
       }
 
+      // In downloadBtn.onclick, update the JSON view after collecting new config:
       document.getElementById('downloadBtn').onclick = function() {
         const editor = document.getElementById('editor');
         const newCfg = collectConfigFromUI(editor);
+        updateJsonView(newCfg);
         const header = '##CONFIG:\n';
         const json = JSON.stringify(newCfg, null, 2);
         const blob = new Blob([header + json], {type: 'text/plain'});

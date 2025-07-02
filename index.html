@@ -4,14 +4,118 @@
     <meta charset="UTF-8">
     <title>Config Editor Tool</title>
     <style>
-      body { font-family: Arial, sans-serif; margin: 2em; }
-      .section { margin-left: 1.5em; border-left: 2px solid #eee; padding-left: 1em; }
-      .collapsible { cursor: pointer; font-weight: bold; }
-      .unknown { background: #ffe0e0; color: #a00; }
-      label { display: block; margin: 0.5em 0 0.2em; }
-      input, select { margin-bottom: 0.5em; }
-      .file-inputs { margin-bottom: 1em; }
-      .download-btn { margin-top: 1em; }
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f7f9fb;
+        color: #333;
+        padding: 2em;
+        line-height: 1.5;
+      }
+
+      h2 {
+        font-size: 1.8em;
+        margin-bottom: 1em;
+        color: #1e3a8a;
+      }
+
+      .file-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        margin-bottom: 2em;
+        max-width: 500px;
+      }
+
+      label {
+        font-weight: 600;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25em;
+      }
+
+      input[type="file"],
+      input[type="text"],
+      input[type="number"],
+      select {
+        padding: 0.5em;
+        font-size: 1em;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 400px;
+        box-sizing: border-box;
+      }
+
+      input.unknown,
+      select.unknown {
+        background-color: #ffeaea;
+        border-color: #e09999;
+        color: #a33;
+      }
+
+      .section {
+        margin-left: 1em;
+        padding-left: 1em;
+        border-left: 3px solid #dbeafe;
+        margin-bottom: 1em;
+        background: #ffffff;
+        border-radius: 6px;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      }
+
+      .collapsible {
+        cursor: pointer;
+        font-weight: bold;
+        color: #1d4ed8;
+        padding: 0.4em 0.6em;
+        background-color: #e0edff;
+        border-radius: 6px;
+        margin-bottom: 0.3em;
+        transition: background 0.2s;
+      }
+
+      .collapsible:hover {
+        background-color: #c7dcff;
+      }
+
+      .collapsible.unknown {
+        background-color: #ffeaea;
+        color: #b91c1c;
+      }
+
+      label.unknown {
+        color: #b91c1c;
+      }
+
+      #jsonView {
+        background: #f0f4f8;
+        padding: 1em;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        margin-top: 2em;
+        font-family: monospace;
+        font-size: 0.9em;
+        max-height: 300px;
+        overflow: auto;
+      }
+
+      .download-btn {
+        padding: 0.6em 1.2em;
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        cursor: pointer;
+        margin-top: 1.5em;
+        transition: background-color 0.2s;
+      }
+
+      .download-btn:hover {
+        background-color: #2563eb;
+      }
     </style>
   </head>
   <body>
@@ -22,7 +126,7 @@
     </div>
     <div id="editor"></div>
     <!-- Add this after <div id="editor"></div> -->
-    <pre id="jsonView" style="background:#f8f8f8; padding:1em; border:1px solid #eee; margin-top:1em; max-height:300px; overflow:auto;"></pre>
+    <pre id="jsonView"></pre>
     <button class="download-btn" id="downloadBtn" style="display:none;">Download Modified Config (.xl3cfg)</button>
     <script>
 
@@ -262,6 +366,12 @@
         document.getElementById('downloadBtn').style.display = 'inline-block';
         updateJsonView(configObj);
       }
+
+      // Update JSON view live on input changes
+      document.getElementById('editor').addEventListener('input', function() {
+        const newCfg = collectConfigFromUI(document.getElementById('editor'));
+        updateJsonView(newCfg);
+      });
 
       // In downloadBtn.onclick, update the JSON view after collecting new config:
       document.getElementById('downloadBtn').onclick = function() {

@@ -328,6 +328,7 @@
       document.getElementById('docFile').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
+        console.log('Importing documentation.txt...');
         const reader = new FileReader();
         reader.onload = function() {
           const { paramTree: tree, paramTypes: types } = parseDocumentation(reader.result);
@@ -341,6 +342,7 @@
       document.getElementById('cfgFile').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
+        console.log('Importing config (.xl3cfg)...');
         const reader = new FileReader();
         reader.onload = function() {
           try {
@@ -355,16 +357,54 @@
 
       // Add this function to update the JSON view
       function updateJsonView(obj) {
-        document.getElementById('jsonView').textContent = JSON.stringify(obj, null, 2);
+        const container = document.getElementById('jsonView');
+        container.innerHTML = '';
+        function renderNode(node, indent = 0) {
+          if (typeof node === 'object' && node !== null) {
+            const isArray = Array.isArray(node);
+            const keys = isArray ? node : Object.keys(node);
+            const wrapper = document.createElement('div');
+            wrapper.style.marginLeft = indent + 'em';
+            for (const key in keys) {
+              const k = isArray ? key : keys[key];
+              const v = node[k];
+              const item = document.createElement('div');
+              if (typeof v === 'object' && v !== null) {
+                const summary = document.createElement('span');
+                summary.textContent = (isArray ? '' : k + ': ') + (Array.isArray(v) ? '[...]' : '{...}');
+                summary.style.cursor = 'pointer';
+                summary.style.fontWeight = 'bold';
+                const child = renderNode(v, indent + 1);
+                child.style.display = 'none';
+                summary.onclick = () => {
+                  child.style.display = child.style.display === 'none' ? '' : 'none';
+                };
+                item.appendChild(summary);
+                item.appendChild(child);
+              } else {
+                item.textContent = (isArray ? '' : k + ': ') + JSON.stringify(v);
+              }
+              wrapper.appendChild(item);
+            }
+            return wrapper;
+          } else {
+            const leaf = document.createElement('span');
+            leaf.textContent = JSON.stringify(node);
+            return leaf;
+          }
+        }
+        container.appendChild(renderNode(obj));
       }
 
+      // In render() before showing JSON
       function render() {
         unknownPaths = new Set();
         const editor = document.getElementById('editor');
         editor.innerHTML = '';
         renderEditor(editor, paramTree, configObj);
         document.getElementById('downloadBtn').style.display = 'inline-block';
-        updateJsonView(configObj);
+        console.log('Rendering JSON view...');
+        updateJsonView(collectConfigFromUI(editor));
       }
 
       // Update JSON view live on input changes

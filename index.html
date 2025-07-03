@@ -389,7 +389,7 @@
                 summary.style.cursor = 'pointer';
                 summary.style.fontWeight = 'bold';
                 const child = renderNode(v, indent + 1);
-                child.style.display = 'none';
+                child.style.display = ''; // Expanded by default
                 summary.onclick = () => {
                   child.style.display = child.style.display === 'none' ? '' : 'none';
                 };

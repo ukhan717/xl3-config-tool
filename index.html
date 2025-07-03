@@ -139,13 +139,38 @@
 
   <script>
     const configOptions = {
-      "system_settings.connections.watchdog": ["off", "on"],
-      "system_settings.sensor.setup.accessory": ["No Accessory", "Wind Screen 90 mm", "Wind Screen 50 mm"],
-      "system_settings.sensor.phantom_power.on_off": ["off", "on"],
-      "system_settings.localization.decimal_separator": ["Dot", "Comma"],
-      "system_settings.measurement.save_mode": ["manually", "prompt", "automatic"]
-      // Add more path: [options] entries here as needed
-    };
+  "system_settings.connections.watchdog": ["off", "on"],
+  "system_settings.sensor.setup.accessory": ["No Accessory", "Wind Screen 90 mm", "Wind Screen 50 mm", "WP30 Community", "WP30 Aircraft", "WP40 Community", "WP40 Aircraft", "WP40+2ndWS1 Community", "WP61 Community", "WP61 Aircraft", "WP62 Community", "WP62 Aircraft"],
+  "system_settings.sensor.setup.sound_field": ["Free Field", "Diffuse Field 1/2 Inch", "Diffuse Field 1/4 Inch"],
+  "system_settings.sensor.phantom_power.on_off": ["off", "on"],
+  "system_settings.localization.decimal_separator": ["Dot", "Comma"],
+  "system_settings.measurement.save_mode": ["manually", "prompt", "automatic"],
+  "system_settings.m8_dio.pin2": ["sdi12", "spdif_out"],
+  "system_settings.analog_output.interface_type": ["unbalanced", "balanced"],
+  "system_settings.analog_output.source.xlr_in.filter": ["off", "HP20Hz", "HP100Hz"],
+  "system_settings.analog_output.source.xlr_in.scaling.select": ["gain", "fix_spl"],
+  "SLM.auto_run": ["off", "on"],
+  "SLM.percentile.source": ["AF", "AS", "Aeq1", "CF", "CS", "Ceq1", "ZF", "ZS", "Zeq1"],
+  "SLM.gliding_eq.average_time.1": ["1 sec", "5 sec", "10 sec", "15 sec", "30 sec", "1 min", "5 min", "10 min", "15 min", "30 min", "60 min"],
+  "SLM.gliding_eq.average_time.2": ["1 sec", "5 sec", "10 sec", "15 sec", "30 sec", "1 min", "5 min", "10 min", "15 min", "30 min", "60 min"],
+  "SLM.gliding_eq.average_time.3": ["1 sec", "5 sec", "10 sec", "15 sec", "30 sec", "1 min", "5 min", "10 min", "15 min", "30 min", "60 min"],
+  "SLM.gliding_eq.average_time.4": ["1 sec", "5 sec", "10 sec", "15 sec", "30 sec", "1 min", "5 min", "10 min", "15 min", "30 min", "60 min"],
+  "SLM.spectrum.octres": ["1/1", "1/3"],
+  "SLM.spectrum.hold_time": ["3 sec", "5 sec", "10 sec"],
+  "SLM.spectrum.fwtw": ["AF", "AS", "CF", "CS", "ZF", "ZS"],
+  "SLM.screen.spectrum.reading.dash": ["live", "eq", "min", "max", "hold", "E", "Percentile 1", "Percentile 2", "Percentile 3", "Percentile 4", "Percentile 5", "Percentile 6", "Percentile 7", "---"],
+  "SLM.screen.spectrum.reading.bar": ["live", "eq", "min", "max", "hold", "E", "Percentile 1", "Percentile 2", "Percentile 3", "Percentile 4", "Percentile 5", "Percentile 6", "Percentile 7", "---"],
+  "SLM.screen.spectrum.axis.y.resolution": ["20 dB/div", "10 dB/div", "5 dB/div", "2.5 dB/div"],
+  "SLM.screen.spectrum.cursor.mode": ["automatic", "manual"],
+  "RT.screen.result_graph.reading.dash": ["---", "EDT", "T15", "T20", "T30"],
+  "RT.screen.result_graph.reading.bar": ["---", "EDT", "T15", "T20", "T30"],
+  "RT.octres": ["1/1", "1/3"],
+  "RT.report.T30": ["off", "on"],
+  "RT.report.T20": ["off", "on"],
+  "RT.report.T15": ["off", "on"],
+  "RT.report.EDT": ["off", "on"],
+  "RT.report.audio.mode": ["off", "on", "markers only"]
+};
 
     function parseConfig(cfgText) {
       const match = cfgText.match(/##CONFIG:\s*([\s\S]*)/);

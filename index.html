@@ -168,7 +168,11 @@
       for (let i = 0; i < pathArray.length - 1; i++) {
         target = target[pathArray[i]];
       }
-      target[pathArray[pathArray.length - 1]] = value;
+      const key = pathArray[pathArray.length - 1];
+      if (value === 'true') value = true;
+      else if (value === 'false') value = false;
+      else if (!isNaN(value)) value = Number(value);
+      target[key] = value;
     }
 
     function renderJson(obj, container, currentPath = '') {
@@ -215,10 +219,6 @@
           input.value = value;
           input.dataset.path = fullPath;
 
-          input.onchange = () => {
-            setNestedValue(obj, fullPath.split('.'), input.value);
-          };
-
           wrapper.appendChild(keyLabel);
           wrapper.appendChild(input);
         }
@@ -252,6 +252,13 @@
     });
 
     document.getElementById('downloadBtn').onclick = function() {
+      const inputs = document.querySelectorAll('input.edit-field');
+      inputs.forEach(input => {
+        const path = input.dataset.path.split('.');
+        const value = input.value;
+        setNestedValue(configObj, path, value);
+      });
+
       const blob = new Blob(['##CONFIG:\n' + JSON.stringify(configObj, null, 2)], {type: 'text/plain'});
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);

@@ -4,14 +4,10 @@
   <meta charset="UTF-8">
   <title>NTi JSON Config Tool</title>
   <style>
-    #jsonView:empty {
-      display: none;
-    }
     body {
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
-      opacity: 1;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f7f9fb;
       color: #333;
@@ -29,7 +25,6 @@
       pointer-events: none;
     }
 
-    /* Header */
     .app-header {
       display: flex;
       align-items: center;
@@ -50,7 +45,6 @@
       font-weight: 600;
     }
 
-    /* Footer */
     .app-footer {
       margin-top: 3em;
       text-align: center;
@@ -69,13 +63,6 @@
       text-decoration: underline;
     }
 
-    /* UI Styles */
-    h2 {
-      font-size: 1.8em;
-      margin-bottom: 1em;
-      color: #1e3a8a;
-    }
-
     .file-inputs {
       display: flex;
       flex-direction: column;
@@ -91,10 +78,7 @@
       gap: 0.25em;
     }
 
-    input[type="file"],
-    input[type="text"],
-    input[type="number"],
-    select {
+    input[type="file"] {
       padding: 0.5em;
       font-size: 1em;
       border: 1px solid #ccc;
@@ -104,61 +88,29 @@
       box-sizing: border-box;
     }
 
-    input.unknown,
-    select.unknown {
-      background-color: #ffeaea;
-      border-color: #e09999;
-      color: #a33;
-    }
-
-    .section {
-      margin-left: 1em;
-      padding-left: 1em;
-      border-left: 3px solid #dbeafe;
-      margin-bottom: 1em;
-      background: #ffffff;
-      border-radius: 6px;
-      padding-top: 0.5em;
-      padding-bottom: 0.5em;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    }
-
-    .collapsible {
-      cursor: pointer;
-      font-weight: bold;
-      color: #1d4ed8;
-      padding: 0.4em 0.6em;
-      background-color: #e0edff;
-      border-radius: 6px;
-      margin-bottom: 0.3em;
-      transition: background 0.2s;
-    }
-
-    .collapsible:hover {
-      background-color: #c7dcff;
-    }
-
-    .collapsible.unknown {
-      background-color: #ffeaea;
-      color: #b91c1c;
-    }
-
-    label.unknown {
-      color: #b91c1c;
-    }
-
     #jsonView {
-      opacity: 0.3;
-      background: transparent;
-      border: none;
       background: #f0f4f8;
       padding: 1em;
       border-radius: 8px;
       margin-top: 2em;
       font-family: monospace;
       font-size: 0.9em;
-      max-height: 300px;
+      max-height: 600px;
       overflow: auto;
+    }
+
+    .node {
+      margin-left: 1em;
+    }
+
+    .key {
+      font-weight: bold;
+      cursor: pointer;
+      color: #1e40af;
+    }
+
+    .value {
+      margin-left: 1em;
     }
 
     .download-btn {
@@ -176,54 +128,136 @@
     .download-btn:hover {
       background-color: #2563eb;
     }
+
+    input.edit-field {
+      margin-left: 0.5em;
+      font-family: monospace;
+      padding: 0.2em;
+      font-size: 0.9em;
+    }
   </style>
 </head>
 <body>
-  <!-- Header -->
   <div class="app-header">
     <img src="img/nti-logo.gif" alt="NTi Audio Logo" class="logo">
     <span class="title">NTi JSON Config Tool</span>
   </div>
 
-  <!-- File Inputs -->
   <div class="file-inputs">
     <label>Load documentation.txt: <input type="file" id="docFile" accept=".txt"></label>
     <label>Load config (.xl3cfg): <input type="file" id="cfgFile" accept=".xl3cfg"></label>
   </div>
 
-  <!-- Editor & Output -->
-  <div id="editor"></div>
-  <pre id="jsonView"></pre>
+  <div id="jsonView"></div>
   <button class="download-btn" id="downloadBtn" style="display:none;">Download Modified Config (.xl3cfg)</button>
 
-  <!-- Footer -->
   <footer class="app-footer">
     © 2025 NTi Audio AG · <a href="https://www.nti-audio.com" target="_blank">nti-audio.com</a>
   </footer>
 
-  <!-- Your existing JS remains the same below -->
   <script>
-    // [KEEP your full JS script exactly as in your current code]
-    function parseDocumentation(docText) {
-      const lines = docText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-      const paramTree = {};
-      const paramTypes = {};
-      for (const line of lines) {
-        const match = line.match(/^([^\s]+)\s+\[(.+)\]$/);
-        if (!match) continue;
-        const path = match[1];
-        const type = match[2];
-        paramTypes[path] = type;
-        const parts = path.split('.');
-        let node = paramTree;
-        for (let i = 0; i < parts.length; ++i) {
-          const part = parts[i];
-          if (!node[part]) node[part] = (i === parts.length - 1) ? null : {};
-          node = node[part];
-        }
-      }
-      return { paramTree, paramTypes };
+    function parseConfig(cfgText) {
+      const match = cfgText.match(/##CONFIG:\s*([\s\S]*)/);
+      if (!match) throw new Error('No ##CONFIG: section found');
+      const jsonText = match[1].trim();
+      return JSON.parse(jsonText);
     }
+
+    function setNestedValue(obj, pathArray, value) {
+      let target = obj;
+      for (let i = 0; i < pathArray.length - 1; i++) {
+        target = target[pathArray[i]];
+      }
+      target[pathArray[pathArray.length - 1]] = value;
+    }
+
+    function renderJson(obj, container, currentPath = '') {
+      if (typeof obj !== 'object' || obj === null) {
+        const valueEl = document.createElement('div');
+        valueEl.textContent = JSON.stringify(obj);
+        container.appendChild(valueEl);
+        return;
+      }
+
+      const isArray = Array.isArray(obj);
+      const keys = isArray ? obj : Object.keys(obj);
+      for (const key in keys) {
+        const actualKey = isArray ? key : keys[key];
+        const value = obj[actualKey];
+        const wrapper = document.createElement('div');
+        wrapper.className = 'node';
+
+        const fullPath = currentPath ? `${currentPath}.${actualKey}` : actualKey;
+
+        if (typeof value === 'object' && value !== null) {
+          const keySpan = document.createElement('span');
+          keySpan.className = 'key';
+          keySpan.textContent = (isArray ? '' : actualKey + ': ') + (Array.isArray(value) ? '[...]' : '{...}');
+
+          const child = document.createElement('div');
+          child.className = 'value';
+          child.style.display = 'block';
+
+          renderJson(value, child, fullPath);
+          keySpan.onclick = () => {
+            child.style.display = child.style.display === 'none' ? 'block' : 'none';
+          };
+
+          wrapper.appendChild(keySpan);
+          wrapper.appendChild(child);
+        } else {
+          const keyLabel = document.createElement('span');
+          keyLabel.textContent = (isArray ? '' : actualKey + ': ');
+
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.className = 'edit-field';
+          input.value = value;
+          input.dataset.path = fullPath;
+
+          input.onchange = () => {
+            setNestedValue(obj, fullPath.split('.'), input.value);
+          };
+
+          wrapper.appendChild(keyLabel);
+          wrapper.appendChild(input);
+        }
+
+        container.appendChild(wrapper);
+      }
+    }
+
+    function updateJsonView(obj) {
+      const container = document.getElementById('jsonView');
+      container.innerHTML = '';
+      renderJson(obj, container);
+    }
+
+    let configObj = {};
+
+    document.getElementById('cfgFile').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function() {
+        try {
+          configObj = parseConfig(reader.result);
+          updateJsonView(configObj);
+          document.getElementById('downloadBtn').style.display = 'inline-block';
+        } catch (err) {
+          alert('Error parsing config: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    document.getElementById('downloadBtn').onclick = function() {
+      const blob = new Blob(['##CONFIG:\n' + JSON.stringify(configObj, null, 2)], {type: 'text/plain'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'modified.xl3cfg';
+      a.click();
+    };
   </script>
 </body>
 </html>

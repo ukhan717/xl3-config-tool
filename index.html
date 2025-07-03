@@ -1,445 +1,204 @@
 <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Config Editor Tool</title>
-    <style>
-      body {
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        opacity: 1;
-        font-family: 'Segoe UI', sans-serif;
-        background-color: #f7f9fb;
-        color: #333;
-        padding: 2em;
-        line-height: 1.5;
-      }
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NTi JSON Config Tool</title>
+  <style>
+    body {
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 1;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f7f9fb;
+      color: #333;
+      padding: 2em;
+      line-height: 1.5;
+    }
 
-      body::before {
-        content: "";
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: url('img/ntijsonconfigtoolbg.png') center/contain no-repeat;
-        opacity: 0.2;
-        z-index: -1;
-        pointer-events: none;
-      }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('img/ntijsonconfigtoolbg.png') center/contain no-repeat;
+      opacity: 0.2;
+      z-index: -1;
+      pointer-events: none;
+    }
 
-      h2 {
-        font-size: 1.8em;
-        margin-bottom: 1em;
-        color: #1e3a8a;
-      }
+    /* Header */
+    .app-header {
+      display: flex;
+      align-items: center;
+      background-color: #004A93;
+      color: white;
+      padding: 1em 1.5em;
+      border-radius: 12px;
+      margin-bottom: 2em;
+    }
 
-      .file-inputs {
-        display: flex;
-        flex-direction: column;
-        gap: 1em;
-        margin-bottom: 2em;
-        max-width: 500px;
-      }
+    .app-header .logo {
+      height: 40px;
+      margin-right: 1em;
+    }
 
-      label {
-        font-weight: 600;
-        display: flex;
-        flex-direction: column;
-        gap: 0.25em;
-      }
+    .app-header .title {
+      font-size: 1.5em;
+      font-weight: 600;
+    }
 
-      input[type="file"],
-      input[type="text"],
-      input[type="number"],
-      select {
-        padding: 0.5em;
-        font-size: 1em;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        width: 100%;
-        max-width: 400px;
-        box-sizing: border-box;
-      }
+    /* Footer */
+    .app-footer {
+      margin-top: 3em;
+      text-align: center;
+      font-size: 0.9em;
+      color: #666;
+      padding-top: 1em;
+      border-top: 1px solid #ddd;
+    }
 
-      input.unknown,
-      select.unknown {
-        background-color: #ffeaea;
-        border-color: #e09999;
-        color: #a33;
-      }
+    .app-footer a {
+      color: #1e40af;
+      text-decoration: none;
+    }
 
-      .section {
-        margin-left: 1em;
-        padding-left: 1em;
-        border-left: 3px solid #dbeafe;
-        margin-bottom: 1em;
-        background: #ffffff;
-        border-radius: 6px;
-        padding-top: 0.5em;
-        padding-bottom: 0.5em;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-      }
+    .app-footer a:hover {
+      text-decoration: underline;
+    }
 
-      .collapsible {
-        cursor: pointer;
-        font-weight: bold;
-        color: #1d4ed8;
-        padding: 0.4em 0.6em;
-        background-color: #e0edff;
-        border-radius: 6px;
-        margin-bottom: 0.3em;
-        transition: background 0.2s;
-      }
+    /* UI Styles */
+    h2 {
+      font-size: 1.8em;
+      margin-bottom: 1em;
+      color: #1e3a8a;
+    }
 
-      .collapsible:hover {
-        background-color: #c7dcff;
-      }
+    .file-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      margin-bottom: 2em;
+      max-width: 500px;
+    }
 
-      .collapsible.unknown {
-        background-color: #ffeaea;
-        color: #b91c1c;
-      }
+    label {
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25em;
+    }
 
-      label.unknown {
-        color: #b91c1c;
-      }
+    input[type="file"],
+    input[type="text"],
+    input[type="number"],
+    select {
+      padding: 0.5em;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+    }
 
-      #jsonView {
-        background: #f0f4f8;
-        padding: 1em;
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        margin-top: 2em;
-        font-family: monospace;
-        font-size: 0.9em;
-        max-height: 300px;
-        overflow: auto;
-      }
+    input.unknown,
+    select.unknown {
+      background-color: #ffeaea;
+      border-color: #e09999;
+      color: #a33;
+    }
 
-      .download-btn {
-        padding: 0.6em 1.2em;
-        background-color: #3b82f6;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 1em;
-        cursor: pointer;
-        margin-top: 1.5em;
-        transition: background-color 0.2s;
-      }
+    .section {
+      margin-left: 1em;
+      padding-left: 1em;
+      border-left: 3px solid #dbeafe;
+      margin-bottom: 1em;
+      background: #ffffff;
+      border-radius: 6px;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
 
-      .download-btn:hover {
-        background-color: #2563eb;
-      }
-    </style>
-  </head>
-  <body>
-    <h2>Measurement Device Config Editor</h2>
-    <div class="file-inputs">
-      <label>Load documentation.txt: <input type="file" id="docFile" accept=".txt"></label>
-      <label>Load config (.xl3cfg): <input type="file" id="cfgFile" accept=".xl3cfg"></label>
-    </div>
-    <div id="editor"></div>
-    <!-- Add this after <div id="editor"></div> -->
-    <pre id="jsonView"></pre>
-    <button class="download-btn" id="downloadBtn" style="display:none;">Download Modified Config (.xl3cfg)</button>
-    <script>
+    .collapsible {
+      cursor: pointer;
+      font-weight: bold;
+      color: #1d4ed8;
+      padding: 0.4em 0.6em;
+      background-color: #e0edff;
+      border-radius: 6px;
+      margin-bottom: 0.3em;
+      transition: background 0.2s;
+    }
 
+    .collapsible:hover {
+      background-color: #c7dcff;
+    }
 
+    .collapsible.unknown {
+      background-color: #ffeaea;
+      color: #b91c1c;
+    }
 
-      // --- Utility functions ---
-      function parseDocumentation(docText) {
-        // Each line: path.to.param [on | off] or [!float value!], etc.
-        const lines = docText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-        const paramTree = {};
-        const paramTypes = {};
-        for (const line of lines) {
-          const match = line.match(/^([^\s]+)\s+\[(.+)\]$/);
-          if (!match) continue;
-          const path = match[1];
-          const type = match[2];
-          paramTypes[path] = type;
-          // Build tree
-          const parts = path.split('.');
-          let node = paramTree;
-          for (let i = 0; i < parts.length; ++i) {
-            const part = parts[i];
-            if (!node[part]) node[part] = (i === parts.length - 1) ? null : {};
-            node = node[part];
-          }
-        }
-        return { paramTree, paramTypes };
-      }
+    label.unknown {
+      color: #b91c1c;
+    }
 
-      function parseConfig(cfgText) {
-        // Find ##CONFIG: and parse the following as JSON
-        const match = cfgText.match(/##CONFIG:\s*([\s\S]*)/);
-        if (!match) throw new Error('No ##CONFIG: section found');
-        const jsonText = match[1].trim();
-        return JSON.parse(jsonText);
-      }
+    #jsonView {
+      background: #f0f4f8;
+      padding: 1em;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      margin-top: 2em;
+      font-family: monospace;
+      font-size: 0.9em;
+      max-height: 300px;
+      overflow: auto;
+    }
 
-      function getAllPaths(obj, prefix = '') {
-        // Recursively get all dot-separated paths in obj
-        let paths = [];
-        for (const k in obj) {
-          const path = prefix ? prefix + '.' + k : k;
-          if (typeof obj[k] === 'object' && obj[k] !== null && !Array.isArray(obj[k])) {
-            paths = paths.concat(getAllPaths(obj[k], path));
-          } else {
-            paths.push(path);
-          }
-        }
-        return paths;
-      }
+    .download-btn {
+      padding: 0.6em 1.2em;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 1.5em;
+      transition: background-color 0.2s;
+    }
 
-      // --- UI rendering ---
-      let paramTypes = {};
-      let paramTree = {};
-      let configObj = {};
-      let unknownPaths = new Set();
+    .download-btn:hover {
+      background-color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="app-header">
+    <img src="img/nti-logo.png" alt="NTi Audio Logo" class="logo">
+    <span class="title">NTi JSON Config Tool</span>
+  </div>
 
-      function renderEditor(container, tree, cfg, pathPrefix = '') {
-        for (const key in tree) {
-          const fullPath = pathPrefix ? pathPrefix + '.' + key : key;
-          const isLeaf = tree[key] === null;
-          const value = cfg ? cfg[key] : undefined;
-          const isUnknown = !paramTypes[fullPath];
-          const label = document.createElement('label');
-          label.textContent = key;
-          if (isUnknown) label.classList.add('unknown');
-          if (isLeaf) {
-            let input;
-            if (!isUnknown) {
-              const type = paramTypes[fullPath];
-              if (/^\s*on\s*\|\s*off\s*$/i.test(type)) {
-                input = document.createElement('select');
-                ['on', 'off'].forEach(opt => {
-                  const o = document.createElement('option');
-                  o.value = opt; o.textContent = opt;
-                  input.appendChild(o);
-                });
-                input.value = value ?? 'off';
-              } else if (/^\s*[\w\s|]+\s*\|\s*[\w\s|]+/i.test(type)) {
-                // e.g. [foo | bar | baz]
-                input = document.createElement('select');
-                type.split('|').map(s => s.trim()).forEach(opt => {
-                  const o = document.createElement('option');
-                  o.value = opt; o.textContent = opt;
-                  input.appendChild(o);
-                });
-                input.value = value ?? input.options[0].value;
-              } else if (/!float value!/.test(type)) {
-                input = document.createElement('input');
-                input.type = 'number';
-                input.step = 'any';
-                input.value = value ?? '';
-              } else if (/!signed int\d+ value!/.test(type)) {
-                input = document.createElement('input');
-                input.type = 'number';
-                input.step = '1';
-                input.value = value ?? '';
-              } else {
-                input = document.createElement('input');
-                input.type = 'text';
-                input.value = value ?? '';
-              }
-            } else {
-              input = document.createElement('input');
-              input.type = 'text';
-              input.value = value ?? '';
-              input.classList.add('unknown');
-              unknownPaths.add(fullPath);
-            }
-            input.dataset.path = fullPath;
-            label.appendChild(input);
-            container.appendChild(label);
-          } else {
-            // Collapsible section
-            const section = document.createElement('div');
-            section.className = 'section';
-            const collapser = document.createElement('div');
-            collapser.textContent = key;
-            collapser.className = 'collapsible';
-            collapser.onclick = function() {
-              content.style.display = content.style.display === 'none' ? '' : 'none';
-            };
-            section.appendChild(collapser);
-            const content = document.createElement('div');
-            content.style.display = '';
-            renderEditor(content, tree[key], value || {}, fullPath);
-            section.appendChild(content);
-            container.appendChild(section);
-          }
-        }
-        // Render unknown keys in config not in doc
-        if (cfg && typeof cfg === 'object') {
-          for (const k in cfg) {
-            const fullPath = pathPrefix ? pathPrefix + '.' + k : k;
-            if (!tree[k] && typeof cfg[k] !== 'object') {
-              const label = document.createElement('label');
-              label.textContent = k;
-              label.classList.add('unknown');
-              const input = document.createElement('input');
-              input.type = 'text';
-              input.value = cfg[k];
-              input.dataset.path = fullPath;
-              input.classList.add('unknown');
-              label.appendChild(input);
-              container.appendChild(label);
-              unknownPaths.add(fullPath);
-            } else if (!tree[k] && typeof cfg[k] === 'object') {
-              // Unknown nested object
-              const section = document.createElement('div');
-              section.className = 'section';
-              const collapser = document.createElement('div');
-              collapser.textContent = k + ' (unknown)';
-              collapser.className = 'collapsible unknown';
-              collapser.onclick = function() {
-                content.style.display = content.style.display === 'none' ? '' : 'none';
-              };
-              section.appendChild(collapser);
-              const content = document.createElement('div');
-              content.style.display = '';
-              renderEditor(content, {}, cfg[k], fullPath);
-              section.appendChild(content);
-              container.appendChild(section);
-              unknownPaths.add(fullPath);
-            }
-          }
-        }
-      }
+  <!-- File Inputs -->
+  <div class="file-inputs">
+    <label>Load documentation.txt: <input type="file" id="docFile" accept=".txt"></label>
+    <label>Load config (.xl3cfg): <input type="file" id="cfgFile" accept=".xl3cfg"></label>
+  </div>
 
-      function collectConfigFromUI(container) {
-        // Recursively collect config from inputs
-        const obj = {};
-        for (const el of container.children) {
-          if (el.tagName === 'LABEL') {
-            const input = el.querySelector('input,select');
-            if (input) {
-              const path = input.dataset.path;
-              const parts = path.split('.');
-              let node = obj;
-              for (let i = 0; i < parts.length - 1; ++i) {
-                if (!node[parts[i]]) node[parts[i]] = {};
-                node = node[parts[i]];
-              }
-              let val = input.value;
-              // Try to cast to number if appropriate
-              if (input.type === 'number' && val !== '') val = Number(val);
-              node[parts[parts.length - 1]] = val;
-            }
-          } else if (el.classList.contains('section')) {
-            const content = el.querySelector('div:not(.collapsible)');
-            const subObj = collectConfigFromUI(content);
-            const key = el.querySelector('.collapsible').textContent.replace(' (unknown)', '');
-            obj[key] = subObj;
-          }
-        }
-        return obj;
-      }
+  <!-- Editor & Output -->
+  <div id="editor"></div>
+  <pre id="jsonView"></pre>
+  <button class="download-btn" id="downloadBtn" style="display:none;">Download Modified Config (.xl3cfg)</button>
 
-      // --- File loading and event handlers ---
-      document.getElementById('docFile').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        console.log('Importing documentation.txt...');
-        const reader = new FileReader();
-        reader.onload = function() {
-          const { paramTree: tree, paramTypes: types } = parseDocumentation(reader.result);
-          paramTree = tree;
-          paramTypes = types;
-          if (Object.keys(configObj).length) render();
-        };
-        reader.readAsText(file);
-      });
+  <!-- Footer -->
+  <footer class="app-footer">
+    © 2025 NTi Audio AG · <a href="https://www.nti-audio.com" target="_blank">nti-audio.com</a>
+  </footer>
 
-      document.getElementById('cfgFile').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        console.log('Importing config (.xl3cfg)...');
-        const reader = new FileReader();
-        reader.onload = function() {
-          try {
-            configObj = parseConfig(reader.result);
-            if (Object.keys(paramTree).length) render();
-          } catch (err) {
-            alert('Error parsing config: ' + err.message);
-          }
-        };
-        reader.readAsText(file);
-      });
-
-      // Add this function to update the JSON view
-      function updateJsonView(obj) {
-        const container = document.getElementById('jsonView');
-        container.innerHTML = '';
-        function renderNode(node, indent = 0) {
-          if (typeof node === 'object' && node !== null) {
-            const isArray = Array.isArray(node);
-            const keys = isArray ? node : Object.keys(node);
-            const wrapper = document.createElement('div');
-            wrapper.style.marginLeft = indent + 'em';
-            for (const key in keys) {
-              const k = isArray ? key : keys[key];
-              const v = node[k];
-              const item = document.createElement('div');
-              if (typeof v === 'object' && v !== null) {
-                const summary = document.createElement('span');
-                summary.textContent = (isArray ? '' : k + ': ') + (Array.isArray(v) ? '[...]' : '{...}');
-                summary.style.cursor = 'pointer';
-                summary.style.fontWeight = 'bold';
-                const child = renderNode(v, indent + 1);
-                child.style.display = ''; // Expanded by default
-                summary.onclick = () => {
-                  child.style.display = child.style.display === 'none' ? '' : 'none';
-                };
-                item.appendChild(summary);
-                item.appendChild(child);
-              } else {
-                item.textContent = (isArray ? '' : k + ': ') + JSON.stringify(v);
-              }
-              wrapper.appendChild(item);
-            }
-            return wrapper;
-          } else {
-            const leaf = document.createElement('span');
-            leaf.textContent = JSON.stringify(node);
-            return leaf;
-          }
-        }
-        container.appendChild(renderNode(obj));
-      }
-
-      // In render() before showing JSON
-      function render() {
-        unknownPaths = new Set();
-        const editor = document.getElementById('editor');
-        editor.innerHTML = '';
-        renderEditor(editor, paramTree, configObj);
-        document.getElementById('downloadBtn').style.display = 'inline-block';
-        console.log('Rendering JSON view...');
-        updateJsonView(collectConfigFromUI(editor));
-      }
-
-      // Update JSON view live on input changes
-      document.getElementById('editor').addEventListener('input', function() {
-        const newCfg = collectConfigFromUI(document.getElementById('editor'));
-        updateJsonView(newCfg);
-      });
-
-      // In downloadBtn.onclick, update the JSON view after collecting new config:
-      document.getElementById('downloadBtn').onclick = function() {
-        const editor = document.getElementById('editor');
-        const newCfg = collectConfigFromUI(editor);
-        updateJsonView(newCfg);
-        const header = '##CONFIG:\n';
-        const json = JSON.stringify(newCfg, null, 2);
-        const blob = new Blob([header + json], {type: 'text/plain'});
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'modified.xl3cfg';
-        a.click();
-      };
-    </script>
-  </body>
-  </html>
+  <!-- Your existing JS remains the same below -->
+  <script>
+    // [KEEP your full JS script exactly as in your current code]
+  </script>
+</body>
+</html>

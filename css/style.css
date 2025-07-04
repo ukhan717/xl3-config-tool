@@ -245,12 +245,12 @@ textarea {
   }
 }
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f7f9fb;
-  color: #333;
-  padding: 2em;
-  line-height: 1.5;
-  position: relative;
+  font-family: 'Fira Sans', 'Segoe UI', Arial, sans-serif;
+  font-size: 1em; /* or 16px */
+  color: #222;
+  background: #f4f7fb;
+  /*margin: 0;*/
+  /*padding: 0;*/
 }
 
 body::before {
@@ -369,3 +369,36 @@ select.edit-field, input.edit-field {
   font-size: 0.9em;
 }
 
+/* css/style.css */
+.json-view {
+  max-height: 1800px;
+  min-height: 900px;
+  overflow-y: auto;
+  background: #f8f9fa;
+  border: 2px solid #0074d9;
+  border-radius: 8px;
+  padding: 24px;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  font-size: 1.1em;
+  color: #222;
+  margin: 32px 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+.json-view::-webkit-scrollbar {
+  width: 10px;
+  background: #e0e7ef;
+}
+.json-view::-webkit-scrollbar-thumb {
+  background: #0074d9;
+  border-radius: 8px;
+}
+
+.node:nth-child(even) {
+  background: #eef3fa;
+}
+
+.key:hover {
+  background: #dbeafe;
+  border-radius: 4px;
+}

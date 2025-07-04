@@ -199,6 +199,12 @@ function renderJson(obj, container, currentPath = '') {
           input = document.createElement('input');
           input.type = 'number';
           input.step = 'any';
+        } else if (pathOptions[0] === '!unsigned int32 value!') {
+          input = document.createElement('input');
+          input.type = 'number';
+          input.min = '0';
+          input.max = '4294967295';
+          input.step = '1';
         } else if (pathOptions[0] === '!text value!') {
           input = document.createElement('input');
           input.type = 'text';

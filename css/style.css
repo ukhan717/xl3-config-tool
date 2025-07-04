@@ -244,4 +244,128 @@ textarea {
     page-break-after: avoid;
   }
 }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f7f9fb;
+  color: #333;
+  padding: 2em;
+  line-height: 1.5;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('img/ntijsonconfigtoolbg.png') center/contain no-repeat;
+  opacity: 0.2;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.app-header, .app-footer {
+  background-color: #004A93;
+  color: white;
+  padding: 1em 1.5em;
+  border-radius: 12px;
+  margin-bottom: 2em;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+}
+
+.app-header .logo {
+  height: 40px;
+  margin-right: 1em;
+}
+
+.app-header .title {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.app-footer {
+  margin-top: 3em;
+  text-align: center;
+  font-size: 0.9em;
+  color: #ccc;
+  padding-top: 1em;
+  border-top: 1px solid #ddd;
+}
+
+.app-footer a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.file-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  max-width: 500px;
+  margin-bottom: 2em;
+}
+
+label {
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+input[type="file"] {
+  padding: 0.5em;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-width: 400px;
+}
+
+#jsonView {
+  background: #f0f4f8;
+  padding: 1em;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.9em;
+  max-height: 600px;
+  overflow: auto;
+}
+
+.node {
+  margin-left: 1em;
+}
+
+.key {
+  font-weight: bold;
+  cursor: pointer;
+  color: #1e40af;
+}
+
+.value {
+  margin-left: 1em;
+}
+
+.download-btn {
+  padding: 0.6em 1.2em;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 1.5em;
+}
+
+.download-btn:hover {
+  background-color: #2563eb;
+}
+
+select.edit-field, input.edit-field {
+  margin-left: 0.5em;
+  font-family: monospace;
+  padding: 0.2em;
+  font-size: 0.9em;
+}
 

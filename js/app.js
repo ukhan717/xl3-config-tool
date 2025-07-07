@@ -193,6 +193,7 @@ function renderJson(obj, container, currentPath = '') {
       keyLabel.textContent = (isArray ? '' : actualKey + ': ');
       const pathOptions = configOptions[fullPath];
       let input;
+      let showWarning = false;
 
       if (pathOptions && pathOptions.length === 1) {
         if (pathOptions[0] === '!float value!') {
@@ -214,6 +215,7 @@ function renderJson(obj, container, currentPath = '') {
             const option = new Option(opt, opt, opt === value, opt === value);
             input.appendChild(option);
           });
+          if (!pathOptions.includes(value)) showWarning = true;
         }
       } else if (pathOptions) {
         input = document.createElement('select');
@@ -221,6 +223,7 @@ function renderJson(obj, container, currentPath = '') {
           const option = new Option(opt, opt, opt === value, opt === value);
           input.appendChild(option);
         });
+        if (!pathOptions.includes(value)) showWarning = true;
       } else {
         input = document.createElement('input');
         input.type = 'text';
@@ -233,6 +236,14 @@ function renderJson(obj, container, currentPath = '') {
 
       wrapper.appendChild(keyLabel);
       wrapper.appendChild(input);
+
+      if (showWarning) {
+        const warn = document.createElement('span');
+        warn.textContent = ' ⚠ Value not in allowed options!';
+        warn.style.color = 'red';
+        warn.style.marginLeft = '8px';
+        wrapper.appendChild(warn);
+      }
     }
 
     container.appendChild(wrapper);

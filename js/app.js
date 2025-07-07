@@ -158,7 +158,6 @@ function setNestedValue(obj, pathArray, value) {
   }
   target[pathArray[pathArray.length - 1]] = value;
 }
-
 function renderJson(obj, container, currentPath = '') {
   if (typeof obj !== 'object' || obj === null) return;
   const isArray = Array.isArray(obj);
@@ -219,17 +218,17 @@ function renderJson(obj, container, currentPath = '') {
         }
       } else if (pathOptions) {
         input = document.createElement('select');
-        pathOptions.forEach(opt => {
-          const option = new Option(opt, opt, opt === value, opt === value);
-          input.appendChild(option);
-        });
+        // If value is invalid, add it as a disabled, selected option
         if (!pathOptions.includes(value)) {
-          // Add the invalid value as an option so it can be seen/selected
-          const invalidOption = new Option(value, value, true, true);
-          invalidOption.style.color = 'red';
+          const invalidOption = new Option(value + ' (invalid)', value, true, true);
+          invalidOption.disabled = true;
           input.appendChild(invalidOption);
           showWarning = true;
         }
+        pathOptions.forEach(opt => {
+          const option = new Option(opt, opt, opt === value, opt === value && pathOptions.includes(value));
+          input.appendChild(option);
+        });
       } else {
         input = document.createElement('input');
         input.type = 'text';

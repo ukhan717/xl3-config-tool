@@ -223,7 +223,13 @@ function renderJson(obj, container, currentPath = '') {
           const option = new Option(opt, opt, opt === value, opt === value);
           input.appendChild(option);
         });
-        if (!pathOptions.includes(value)) showWarning = true;
+        if (!pathOptions.includes(value)) {
+          // Add the invalid value as an option so it can be seen/selected
+          const invalidOption = new Option(value, value, true, true);
+          invalidOption.style.color = 'red';
+          input.appendChild(invalidOption);
+          showWarning = true;
+        }
       } else {
         input = document.createElement('input');
         input.type = 'text';
@@ -256,6 +262,23 @@ function updateJsonView(obj) {
   renderJson(obj, container);
 }
 
+// Helper to check for invalid values in the JSON
+function hasInvalidValues(obj, path = '') {
+  if (typeof obj !== 'object' || obj === null) return false;
+  for (const key in obj) {
+    const fullPath = path ? `${path}.${key}` : key;
+    const value = obj[key];
+    const options = configOptions[fullPath];
+    if (options && Array.isArray(options) && !options.includes(value)) {
+      return true;
+    }
+    if (typeof value === 'object' && value !== null) {
+      if (hasInvalidValues(value, fullPath)) return true;
+    }
+  }
+  return false;
+}
+
 let configObj = {};
 
 document.getElementById('cfgFile').addEventListener('change', function (e) {
@@ -280,6 +303,11 @@ document.getElementById('downloadBtn').onclick = function () {
     const path = input.dataset.path.split('.');
     setNestedValue(configObj, path, input.value);
   });
+
+  if (hasInvalidValues(configObj)) {
+  const proceed = confirm('Warning: The config file contains invalid data that needs to be fixed!\nDo you want to continue downloading?');
+  if (!proceed) return;
+  }
 
   const blob = new Blob(['##CONFIG:\n' + JSON.stringify(configObj, null, 2)], { type: 'text/plain' });
   const a = document.createElement('a');

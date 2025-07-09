@@ -46,28 +46,29 @@ function setNestedValue(obj, pathArray, value) {
   target[pathArray[pathArray.length - 1]] = value;
 }
 
-function renderJson(obj, container, currentPath = '', configOptions) {
+function renderJson(obj, container, currentPath = '', configOptions, level = 0) {
   if (typeof obj !== 'object' || obj === null) return;
   const isArray = Array.isArray(obj);
   const keys = isArray ? obj : Object.keys(obj);
 
+  let index = 0;
   for (const key in keys) {
     const actualKey = isArray ? key : keys[key];
     const value = isArray ? obj[key] : obj[actualKey];
     const wrapper = document.createElement('div');
-    wrapper.className = 'node';
+    wrapper.className = `flex items-center justify-between py-2 pl-${4 + (level * 2)} ${index % 2 === 0 ? 'bg-white' : 'bg-blue-50'}`; // Added justify-between
 
     const fullPath = currentPath ? `${currentPath}.${actualKey}` : actualKey;
 
     if (typeof value === 'object' && value !== null) {
       const keySpan = document.createElement('span');
-      keySpan.className = 'key';
+      keySpan.className = 'font-semibold text-blue-800 cursor-pointer hover:bg-blue-100 hover:rounded px-1 transition-colors';
       keySpan.textContent = (isArray ? '' : actualKey + ': ') + (Array.isArray(value) ? '[...]' : '{...}');
 
       const child = document.createElement('div');
-      child.className = 'value';
+      child.className = 'ml-4 mt-1';
       child.style.display = 'block';
-      renderJson(value, child, fullPath, configOptions);
+      renderJson(value, child, fullPath, configOptions, level + 1);
 
       keySpan.onclick = () => {
         child.style.display = child.style.display === 'none' ? 'block' : 'none';
@@ -77,8 +78,11 @@ function renderJson(obj, container, currentPath = '', configOptions) {
       wrapper.appendChild(child);
     } else {
       const keyLabel = document.createElement('span');
+      keyLabel.className = 'font-semibold text-gray-800 mr-3 w-36 truncate'; // Increased width to 36
       keyLabel.textContent = (isArray ? '' : actualKey + ': ');
       const pathOptions = configOptions[fullPath];
+      let inputWrapper = document.createElement('div');
+      inputWrapper.className = 'flex items-center space-x-2'; // Right-aligned group
       let input;
       let showWarning = false;
 
@@ -88,6 +92,7 @@ function renderJson(obj, container, currentPath = '', configOptions) {
           input.type = 'number';
           input.step = 'any';
           input.value = value;
+          input.className = 'p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white w-32 flex-grow transition-colors';
         } else if (pathOptions[0] === '!unsigned int32 value!') {
           input = document.createElement('input');
           input.type = 'number';
@@ -95,10 +100,12 @@ function renderJson(obj, container, currentPath = '', configOptions) {
           input.max = '4294967295';
           input.step = '1';
           input.value = value;
+          input.className = 'p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white w-32 flex-grow transition-colors';
         } else if (pathOptions[0] === '!text value!') {
           input = document.createElement('input');
           input.type = 'text';
           input.value = value;
+          input.className = 'p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white w-64 flex-grow transition-colors';
         } else {
           input = document.createElement('select');
           pathOptions.forEach(opt => {
@@ -107,6 +114,7 @@ function renderJson(obj, container, currentPath = '', configOptions) {
           });
           input.value = value; // Always set to config value
           if (!pathOptions.includes(value)) showWarning = true;
+          input.className = 'p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white w-32 flex-grow transition-colors';
         }
       } else if (pathOptions) {
         input = document.createElement('select');
@@ -121,36 +129,38 @@ function renderJson(obj, container, currentPath = '', configOptions) {
           input.appendChild(option);
         });
         input.value = value; // Always set to config value
+        input.className = 'p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white w-32 flex-grow transition-colors';
       } else {
         input = document.createElement('input');
         input.type = 'text';
         input.value = value;
+        input.className = 'p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white w-64 flex-grow transition-colors';
       }
 
-      input.className = 'edit-field';
       input.dataset.path = fullPath;
-
-      wrapper.appendChild(keyLabel);
-      wrapper.appendChild(input);
+      inputWrapper.appendChild(input);
 
       if (showWarning) {
         const warn = document.createElement('span');
         warn.textContent = ' ⚠ Value not in allowed options!';
-        warn.style.color = 'red';
-        warn.style.marginLeft = '8px';
-        wrapper.appendChild(warn);
-        input.style.borderColor = 'red';
+        warn.className = 'text-red-600 ml-3 font-medium';
+        inputWrapper.appendChild(warn);
+        input.className += ' border-red-600';
       }
+
+      wrapper.appendChild(keyLabel);
+      wrapper.appendChild(inputWrapper);
     }
 
     container.appendChild(wrapper);
+    index++;
   }
 }
 
 function updateJsonView(obj, configOptions) {
   const container = document.getElementById('jsonView');
   container.innerHTML = '';
-  renderJson(obj, container, '', configOptions);
+  renderJson(obj, container, '', configOptions, 0);
 }
 
 function hasInvalidValues(obj, configOptions, path = '') {
@@ -222,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   downloadBtn.onclick = function () {
-    const inputs = document.querySelectorAll('.edit-field');
+    const inputs = document.querySelectorAll('[data-path]');
     inputs.forEach(input => {
       const path = input.dataset.path.split('.');
       setNestedValue(configObj, path, input.value);

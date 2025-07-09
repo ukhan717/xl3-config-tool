@@ -4,32 +4,53 @@
   <meta charset="UTF-8">
   <title>NTi JSON Config Tool</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&family=Fira+Mono&display=swap" rel="stylesheet">
+  <style>
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url('img/ntijsonconfigtoolbg.png') center/contain no-repeat;
+      opacity: 0.2;
+      z-index: -1;
+      pointer-events: none;
+    }
+    /* Custom scrollbar for JSON view */
+    #jsonView::-webkit-scrollbar {
+      width: 10px;
+      background: #e0e7ef;
+    }
+    #jsonView::-webkit-scrollbar-thumb {
+      background: #0074d9;
+      border-radius: 8px;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
-  <header class="bg-white shadow-md p-4 flex items-center justify-center">
+<body class="bg-gray-50 min-h-screen flex flex-col font-fira-sans">
+  <header class="bg-blue-900 text-white p-6 flex items-center justify-center rounded-xl shadow-lg">
     <img src="img/nti-logo.gif" alt="NTi Audio Logo" class="h-12 mr-4">
-    <span class="text-2xl font-bold text-gray-800">NTi JSON Config Tool</span>
+    <span class="text-2xl font-semibold tracking-tight">NTi JSON Config Tool</span>
   </header>
 
-  <main class="flex-grow container mx-auto p-4">
-    <div class="flex flex-col space-y-4 mb-6">
-      <label class="flex flex-col text-sm font-medium text-gray-700">
+  <main class="flex-grow container mx-auto p-6">
+    <div class="flex flex-col space-y-4 mb-8 max-w-md mx-auto">
+      <label class="flex flex-col text-sm font-semibold text-gray-800">
         Load documentation (documentation.json):
-        <input type="file" id="docFile" accept=".json" class="mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+        <input type="file" id="docFile" accept=".json" class="mt-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-colors">
       </label>
-      <label class="flex flex-col text-sm font-medium text-gray-700">
+      <label class="flex flex-col text-sm font-semibold text-gray-800">
         Load config (.xl3cfg):
-        <input type="file" id="cfgFile" accept=".xl3cfg" disabled title="Please load documentation.json first" class="mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+        <input type="file" id="cfgFile" accept=".xl3cfg" disabled title="Please load documentation.json first" class="mt-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
       </label>
     </div>
 
-    <div id="jsonView" class="bg-white p-4 rounded-md shadow-md"></div>
+    <div id="jsonView" class="bg-white p-6 rounded-lg shadow-lg border-2 border-blue-600 font-fira-mono text-gray-800 text-base max-h-[1800px] min-h-[400px] overflow-y-auto"></div>
 
-    <button id="downloadBtn" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" style="display:none;">Download Modified Config (.xl3cfg)</button>
+    <button id="downloadBtn" class="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors" style="display:none;">Download Modified Config (.xl3cfg)</button>
   </main>
 
-  <footer class="bg-white shadow-inner p-4 text-center text-sm text-gray-600">
-    © 2025 NTi Audio AG · <a href="https://www.nti-audio.com" target="_blank" class="text-blue-600 hover:underline">nti-audio.com</a>
+  <footer class="bg-blue-900 text-gray-200 p-4 text-center text-sm rounded-t-xl shadow-inner mt-8">
+    © 2025 NTi Audio AG · <a href="https://www.nti-audio.com" target="_blank" class="text-blue-300 hover:text-blue-100 underline">nti-audio.com</a>
   </footer>
 
   <script type="module" src="js/app.js"></script>

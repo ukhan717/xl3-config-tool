@@ -8,7 +8,7 @@ function parseConfigOptions(docJson, prefix = '') {
       const newPath = currentPath ? `${currentPath}.${key}` : key;
 
       if (typeof value === 'string') {
-        // Parse the option string, e.g., "[ off | on ]" or "[ !float value! ]"
+        // Parse the option string, e.g., "[ on | off ]" or "[ !float value! ]"
         const trimmed = value.trim();
         if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
           const content = trimmed.slice(1, -1).trim();
@@ -87,21 +87,25 @@ function renderJson(obj, container, currentPath = '', configOptions) {
           input = document.createElement('input');
           input.type = 'number';
           input.step = 'any';
+          input.value = value;
         } else if (pathOptions[0] === '!unsigned int32 value!') {
           input = document.createElement('input');
           input.type = 'number';
           input.min = '0';
           input.max = '4294967295';
           input.step = '1';
+          input.value = value;
         } else if (pathOptions[0] === '!text value!') {
           input = document.createElement('input');
           input.type = 'text';
+          input.value = value;
         } else {
           input = document.createElement('select');
           pathOptions.forEach(opt => {
-            const option = new Option(opt, opt, opt === value, opt === value);
+            const option = new Option(opt, opt);
             input.appendChild(option);
           });
+          input.value = value; // Always set to config value
           if (!pathOptions.includes(value)) showWarning = true;
         }
       } else if (pathOptions) {
@@ -113,9 +117,10 @@ function renderJson(obj, container, currentPath = '', configOptions) {
           showWarning = true;
         }
         pathOptions.forEach(opt => {
-          const option = new Option(opt, opt, opt === value);
+          const option = new Option(opt, opt);
           input.appendChild(option);
         });
+        input.value = value; // Always set to config value
       } else {
         input = document.createElement('input');
         input.type = 'text';
@@ -124,7 +129,6 @@ function renderJson(obj, container, currentPath = '', configOptions) {
 
       input.className = 'edit-field';
       input.dataset.path = fullPath;
-      if (!input.value) input.value = value;
 
       wrapper.appendChild(keyLabel);
       wrapper.appendChild(input);
@@ -155,7 +159,7 @@ function hasInvalidValues(obj, configOptions, path = '') {
     const fullPath = path ? `${path}.${key}` : key;
     const value = obj[key];
     const options = configOptions[fullPath];
-    if (options && Array.isArray(options) && !options.includes(value)) {
+    if (options && Array.isArray(options) && options.length > 1 && !options.includes(value)) {
       return true;
     }
     if (typeof value === 'object' && value !== null) {
@@ -166,12 +170,12 @@ function hasInvalidValues(obj, configOptions, path = '') {
 }
 
 let configObj = {};
+let configOptions = {};
 
 document.addEventListener('DOMContentLoaded', function () {
   const cfgInput = document.getElementById('cfgFile');
-  const docInput = document.getElementById('docFile'); // New input for documentation file
+  const docInput = document.getElementById('docFile');
   const downloadBtn = document.getElementById('downloadBtn');
-  let configOptions = {};
 
   // Handle documentation file input
   docInput.addEventListener('change', function (e) {
@@ -182,11 +186,15 @@ document.addEventListener('DOMContentLoaded', function () {
       try {
         const docJson = JSON.parse(reader.result);
         configOptions = parseConfigOptions(docJson);
+        cfgInput.disabled = false; // Enable config file input
+        cfgInput.title = ''; // Clear tooltip
         if (configObj && Object.keys(configObj).length > 0) {
           updateJsonView(configObj, configOptions);
         }
       } catch (err) {
         alert('Error parsing documentation file: ' + err.message);
+        cfgInput.disabled = true;
+        cfgInput.title = 'Please load a valid documentation.json first';
       }
     };
     reader.readAsText(file);
@@ -195,6 +203,11 @@ document.addEventListener('DOMContentLoaded', function () {
   cfgInput.addEventListener('change', function (e) {
     const file = e.target.files[0];
     if (!file) return;
+    if (Object.keys(configOptions).length === 0) {
+      alert('Please load documentation.json first');
+      cfgInput.value = ''; // Clear the input
+      return;
+    }
     const reader = new FileReader();
     reader.onload = function () {
       try {

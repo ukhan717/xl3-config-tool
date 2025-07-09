@@ -143,9 +143,23 @@ function renderJson(obj, container, currentPath = '', configOptions, level = 0) 
       if (showWarning) {
         const warn = document.createElement('span');
         warn.textContent = ' ⚠ Value not in allowed options!';
-        warn.className = 'text-red-600 ml-3 font-medium';
+        warn.className = 'text-red-600 ml-3 font-medium warning';
         inputWrapper.appendChild(warn);
         input.className += ' border-red-600';
+      }
+
+      // Add event listener to remove warning when value becomes valid
+      if (input.tagName === 'SELECT') {
+        input.addEventListener('change', function () {
+          const selectedValue = this.value;
+          const warningSpan = this.nextElementSibling;
+          const path = this.dataset.path;
+          const validOptions = configOptions[path] || [];
+          if (validOptions.includes(selectedValue) && warningSpan && warningSpan.className.includes('warning')) {
+            warningSpan.remove();
+            this.className = this.className.replace('border-red-600', '').trim();
+          }
+        });
       }
 
       wrapper.appendChild(keyLabel);

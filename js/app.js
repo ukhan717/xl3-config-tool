@@ -1,4 +1,36 @@
-import { configOptions } from './config-options.js';
+// Function to parse the documentation JSON and generate configOptions
+function parseConfigOptions(docJson, prefix = '') {
+  const configOptions = {};
+
+  function traverse(obj, currentPath = '') {
+    for (const key in obj) {
+      const value = obj[key];
+      const newPath = currentPath ? `${currentPath}.${key}` : key;
+
+      if (typeof value === 'string') {
+        // Parse the option string, e.g., "[ off | on ]" or "[ !float value! ]"
+        const trimmed = value.trim();
+        if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+          const content = trimmed.slice(1, -1).trim();
+          if (content.startsWith('!') && content.endsWith('value!')) {
+            // Handle special types like !float value!, !text value!
+            configOptions[newPath] = [content];
+          } else {
+            // Handle enum options
+            const options = content.split('|').map(opt => opt.trim()).filter(opt => opt);
+            configOptions[newPath] = options;
+          }
+        }
+      } else if (typeof value === 'object' && value !== null) {
+        // Recursively traverse nested objects
+        traverse(value, newPath);
+      }
+    }
+  }
+
+  traverse(docJson);
+  return configOptions;
+}
 
 function parseConfig(cfgText) {
   const match = cfgText.match(/##CONFIG:\s*([\s\S]*)/);
@@ -14,7 +46,7 @@ function setNestedValue(obj, pathArray, value) {
   target[pathArray[pathArray.length - 1]] = value;
 }
 
-function renderJson(obj, container, currentPath = '') {
+function renderJson(obj, container, currentPath = '', configOptions) {
   if (typeof obj !== 'object' || obj === null) return;
   const isArray = Array.isArray(obj);
   const keys = isArray ? obj : Object.keys(obj);
@@ -35,7 +67,7 @@ function renderJson(obj, container, currentPath = '') {
       const child = document.createElement('div');
       child.className = 'value';
       child.style.display = 'block';
-      renderJson(value, child, fullPath);
+      renderJson(value, child, fullPath, configOptions);
 
       keySpan.onclick = () => {
         child.style.display = child.style.display === 'none' ? 'block' : 'none';
@@ -111,13 +143,13 @@ function renderJson(obj, container, currentPath = '') {
   }
 }
 
-function updateJsonView(obj) {
+function updateJsonView(obj, configOptions) {
   const container = document.getElementById('jsonView');
   container.innerHTML = '';
-  renderJson(obj, container);
+  renderJson(obj, container, '', configOptions);
 }
 
-function hasInvalidValues(obj, path = '') {
+function hasInvalidValues(obj, configOptions, path = '') {
   if (typeof obj !== 'object' || obj === null) return false;
   for (const key in obj) {
     const fullPath = path ? `${path}.${key}` : key;
@@ -127,7 +159,7 @@ function hasInvalidValues(obj, path = '') {
       return true;
     }
     if (typeof value === 'object' && value !== null) {
-      if (hasInvalidValues(value, fullPath)) return true;
+      if (hasInvalidValues(value, configOptions, fullPath)) return true;
     }
   }
   return false;
@@ -137,7 +169,28 @@ let configObj = {};
 
 document.addEventListener('DOMContentLoaded', function () {
   const cfgInput = document.getElementById('cfgFile');
+  const docInput = document.getElementById('docFile'); // New input for documentation file
   const downloadBtn = document.getElementById('downloadBtn');
+  let configOptions = {};
+
+  // Handle documentation file input
+  docInput.addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function () {
+      try {
+        const docJson = JSON.parse(reader.result);
+        configOptions = parseConfigOptions(docJson);
+        if (configObj && Object.keys(configObj).length > 0) {
+          updateJsonView(configObj, configOptions);
+        }
+      } catch (err) {
+        alert('Error parsing documentation file: ' + err.message);
+      }
+    };
+    reader.readAsText(file);
+  });
 
   cfgInput.addEventListener('change', function (e) {
     const file = e.target.files[0];
@@ -146,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
     reader.onload = function () {
       try {
         configObj = parseConfig(reader.result);
-        updateJsonView(configObj);
+        updateJsonView(configObj, configOptions);
         downloadBtn.style.display = 'inline-block';
       } catch (err) {
         alert('Error parsing config: ' + err.message);
@@ -162,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
       setNestedValue(configObj, path, input.value);
     });
 
-    if (hasInvalidValues(configObj)) {
+    if (hasInvalidValues(configObj, configOptions)) {
       const proceed = confirm('Warning: The config file contains invalid data that needs to be fixed!\nDo you want to continue downloading?');
       if (!proceed) return;
     }

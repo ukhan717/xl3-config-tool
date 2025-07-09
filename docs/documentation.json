@@ -1,0 +1,316 @@
+{
+  "system_settings": {
+    "connections": {
+      "watchdog": "[ off | on ]"
+    },
+    "sensor": {
+      "setup": {
+        "accessory": "[ No Accessory | Wind Screen 90 mm | Wind Screen 50 mm | WP30 Community | WP30 Aircraft | WP40 Community | WP40 Aircraft | WP40+2ndWS1 Community | WP61 Community | WP61 Aircraft | WP62 Community | WP62 Aircraft ]",
+        "sound_field": "[ Free Field | Diffuse Field 1/2 Inch | Diffuse Field 1/4 Inch ]"
+      },
+      "phantom_power": {
+        "on_off": "[ off | on ]"
+      }
+    },
+    "localization": {
+      "decimal_separator": "[ Dot | Comma ]"
+    },
+    "measurement": {
+      "save_mode": "[ manually | prompt | automatic ]",
+      "name_prefix": "[ !text value! ]"
+    },
+    "m8_dio": {
+      "pin2": "[ sdi12 | spdif_out ]"
+    },
+    "analog_output": {
+      "interface_type": "[ unbalanced | balanced ]",
+      "source": {
+        "xlr_in": {
+          "scaling": {
+            "select": "[ gain | fix_spl ]",
+            "gain": {
+              "value": "[ !float value! ]"
+            },
+            "fix_spl": {
+              "ref_0dBu": "[ !float value! ]"
+            }
+          },
+          "filter": "[ off | HP20Hz | HP100Hz ]"
+        }
+      }
+    }
+  },
+  "SLM": {
+    "auto_run": "[ off | on ]",
+    "percentile": {
+      "1": "[ !float value! ]",
+      "2": "[ !float value! ]",
+      "3": "[ !float value! ]",
+      "4": "[ !float value! ]",
+      "5": "[ !float value! ]",
+      "6": "[ !float value! ]",
+      "7": "[ !float value! ]",
+      "source": "[ AF | AS | Aeq1 | CF | CS | Ceq1 | ZF | ZS | Zeq1 ]"
+    },
+    "gliding_eq": {
+      "average_time": {
+        "1": "[ 1 sec | 5 sec | 10 sec | 15 sec | 30 sec | 1 min | 5 min | 10 min | 15 min | 30 min | 60 min ]",
+        "2": "[ 1 sec | 5 sec | 10 sec | 15 sec | 30 sec | 1 min | 5 min | 10 min | 15 min | 30 min | 60 min ]",
+        "3": "[ 1 sec | 5 sec | 10 sec | 15 sec | 30 sec | 1 min | 5 min | 10 min | 15 min | 30 min | 60 min ]",
+        "4": "[ 1 sec | 5 sec | 10 sec | 15 sec | 30 sec | 1 min | 5 min | 10 min | 15 min | 30 min | 60 min ]"
+      }
+    },
+    "spectrum": {
+      "octres": "[ 1/1 | 1/3 ]",
+      "hold_time": "[ 3 sec | 5 sec | 10 sec ]",
+      "fwtw": "[ AF | AS | CF | CS | ZF | ZS ]"
+    },
+    "screen": {
+      "spectrum": {
+        "reading": {
+          "dash": "[ live | eq | min | max | hold | E | Percentile 1 | Percentile 2 | Percentile 3 | Percentile 4 | Percentile 5 | Percentile 6 | Percentile 7 | --- ]",
+          "bar": "[ live | eq | min | max | hold | E | Percentile 1 | Percentile 2 | Percentile 3 | Percentile 4 | Percentile 5 | Percentile 6 | Percentile 7 | --- ]"
+        },
+        "axis": {
+          "x": {
+            "start": "[ !unsigned int32 value! ]",
+            "stop": "[ !unsigned int32 value! ]"
+          },
+          "y": {
+            "start": "[ !float value! ]",
+            "resolution": "[ 20 dB/div | 10 dB/div | 5 dB/div | 2.5 dB/div ]"
+          }
+        },
+        "cursor": {
+          "mode": "[ automatic | manual ]",
+          "position": "[ !signed int32 value! ]"
+        }
+      },
+      "123": {
+        "panel": {
+          "1": {
+            "level": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+            "limit_on": "[ off | on ]"
+          },
+          "2": {
+            "level": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+            "limit_on": "[ off | on ]"
+          },
+          "3": {
+            "level": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+            "limit_on": "[ off | on ]"
+          },
+          "4": {
+            "level": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+            "limit_on": "[ off | on ]"
+          },
+          "5": {
+            "level": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+            "limit_on": "[ off | on ]"
+          }
+        },
+        "limit": {
+          "1": {
+            "level": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+            "value": {
+              "red": "[ !float value! ]",
+              "amber": "[ !float value! ]"
+            }
+          },
+          "2": {
+            "level": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+            "value": {
+              "red": "[ !float value! ]",
+              "amber": "[ !float value! ]"
+            }
+          },
+          "3": {
+            "level": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+            "value": {
+              "red": "[ !float value! ]",
+              "amber": "[ !float value! ]"
+            }
+          },
+          "4": {
+            "level": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+            "value": {
+              "red": "[ !float value! ]",
+              "amber": "[ !float value! ]"
+            }
+          },
+          "5": {
+            "level": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+            "value": {
+              "red": "[ !float value! ]",
+              "amber": "[ !float value! ]"
+            }
+          }
+        },
+        "layout": "[ Layout 1 | Layout 2 | Layout 3 | Layout 4 | Layout 5 | Layout 6 ]"
+      },
+      "xt_chart": {
+        "graph": {
+          "1": {
+            "level": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]"
+          },
+          "2": {
+            "level": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]"
+          }
+        },
+        "axis": {
+          "y": {
+            "start": "[ !float value! ]",
+            "resolution": "[ 20 dB/div | 10 dB/div | 5 dB/div | 2.5 dB/div ]"
+          },
+          "x": {
+            "resolution": "[ 1 | 2 | 3 ]"
+          }
+        }
+      }
+    },
+    "kset": {
+      "meas_time": "[ 5 s | 10 s | 15 s | 20 s ]",
+      "k1": "[ !float value! ]",
+      "k2": "[ !float value! ]",
+      "k2_level": "[ LCPK | LCeq ]"
+    },
+    "report_logging": {
+      "splitting": {
+        "interval": "[ daily | hourly | 30 min | 20 min | 15 min | 10 min | 5 min ]",
+        "offset": "[ !signed int32 value! ]"
+      },
+      "logging": {
+        "utc_for_text_files": "[ off | on ]",
+        "interval": "[ off | 1 s | 100 ms ]",
+        "file_format": "[ text_tsv | binary | text_tsv + binary ]",
+        "folder_struct": "[ standard | noisemonitoring ]",
+        "audio": {
+          "mode": "[ off | on | markers only ]",
+          "format": "[ PCM_FLOAT32 | PCM_INT24 | ADPCM ]",
+          "fs": "[ 96 kHz | 48 kHz | 24 kHz | 12 kHz ]",
+          "adpcm0dBFS": "[ AGC | 140 dBSPL | 120 dBSPL | 100 dBSPL ]",
+          "markers_only": {
+            "pre_recording_ms": "[ !unsigned int32 value! ]"
+          }
+        },
+        "weather_interval": "[ 1 sec | 5 sec | 10 sec | 15 sec | 30 sec | 1 min | 5 min | 10 min | 15 min | 30 min | 60 min ]",
+        "marker_trigger": {
+          "button": {
+            "max_duration_ms": "[ !unsigned int32 value! ]",
+            "treat_all_as_1": "[ off | on ]",
+            "mode": "[ Toggle | Hold ]",
+            "source": "[ Screen | Keypad ]"
+          },
+          "level": {
+            "max_recording_duration_ms": "[ !unsigned int32 value! ]",
+            "active": "[ off | on ]",
+            "evaluation": {
+              "select": "[ level1 | level1-level1 ]",
+              "level1": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+              "level2": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]"
+            },
+            "trigger_condition": "[ on level above | on level below ]",
+            "start": {
+              "threshold": "[ !float value! ]",
+              "for_sec": "[ !float value! ]"
+            },
+            "stop": {
+              "hysteresis": "[ !float value! ]",
+              "for_sec": "[ !float value! ]"
+            }
+          },
+          "periodic": {
+            "every_ms": "[ !unsigned int32 value! ]",
+            "active": "[ off | on ]",
+            "duration_ms": "[ !unsigned int32 value! ]"
+          }
+        }
+      },
+      "level_sel": {
+        "1": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+        "2": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+        "3": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+        "4": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+        "5": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+        "6": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+        "7": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+        "8": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+        "9": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]",
+        "10": "[ LAS | LAS+k1 | LASmax | LASmax+k1 | LASmin | LASmin+k1 | LAF | LAF+k1 | LAFmax | LAFmax+k1 | LAFmin | LAFmin+k1 | LAFinst | LAI | LAI+k1 | LAImax | LAImax+k1 | LAImin | LAImin+k1 | LAPK | LAPKmax | LAE | LAE+k1 | LAeq | LAeq_dt | LAeq+k1 | Prev_LAeq | Prev_LAeq+k1 | LAeq_g1 | LAeq_g1+k1 | LAeq_g1max | LAeq_g1max+k1 | LAeq_g2 | LAeq_g2+k1 | LAeq_g2max | LAeq_g2max+k1 | LAeq_g3 | LAeq_g3+k1 | LAeq_g3max | LAeq_g3max+k1 | LAeq_g4 | LAeq_g4+k1 | LAeq_g4max | LAeq_g4max+k1 | LAIeq | LAIeq+k1 | LAFT3 | LAFT3eq | LAFT5 | LAFT5eq | LCS | LCS+k2 | LCSmax | LCSmax+k2 | LCSmin | LCSmin+k2 | LCF | LCF+k2 | LCFmax | LCFmax+k2 | LCFmin | LCFmin+k2 | LCFinst | LCI | LCI+k2 | LCImax | LCImax+k2 | LCImin | LCImin+k2 | LCPK | LCPK+k2 | LCPKmax | LCPKmax+k2 | LCE | LCE+k2 | LCeq | LCeq_dt | LCeq+k2 | Prev_LCeq | Prev_LCeq+k2 | LCeq_g1 | LCeq_g1+k2 | LCeq_g1max | LCeq_g1max+k2 | LCeq_g2 | LCeq_g2+k2 | LCeq_g2max | LCeq_g2max+k2 | LCeq_g3 | LCeq_g3+k2 | LCeq_g3max | LCeq_g3max+k2 | LCeq_g4 | LCeq_g4+k2 | LCeq_g4max | LCeq_g4max+k2 | LCIeq | LCIeq+k2 | LZS | LZSmax | LZSmin | LZF | LZFmax | LZFmin | LZFinst | LZI | LZImax | LZImin | LZPK | LZPKmax | LZE | LZeq | LZeq_dt | Prev_LZeq | LZIeq | Lperc1 | Lperc2 | Lperc3 | Lperc4 | Lperc5 | Lperc6 | Lperc7 | k1 | k2 | --- | LAFT5eq-LAeq | LAIeq-LAeq | LCeq-LAeq | LCeq_g1-LAeq_g1 | LCeq_g2-LAeq_g2 | LCeq_g3-LAeq_g3 | LCeq_g4-LAeq_g4 ]"
+      },
+      "levels": "[ all | selected ]",
+      "spectra": "[ off | eq | eq, max, min | all ]"
+    },
+    "timer": {
+      "mode": "[ Continuous | Single | Repeated ]",
+      "set": {
+        "single_ms": "[ !unsigned int32 value! ]",
+        "repeated_ms": "[ !unsigned int32 value! ]"
+      }
+    },
+    "measurement_series": "[ off | on ]",
+    "scheduler": {
+      "select": "[ off | daily ]",
+      "daily": {
+        "start_time": {
+          "hour": "[ !unsigned int32 value! ]",
+          "minute": "[ !unsigned int32 value! ]"
+        },
+        "end_time": {
+          "hour": "[ !unsigned int32 value! ]",
+          "minute": "[ !unsigned int32 value! ]"
+        }
+      },
+      "power_save": "[ off | on ]",
+      "power_save_delay_minutes": "[ !unsigned int32 value! ]"
+    }
+  },
+  "RT": {
+    "screen": {
+      "result_graph": {
+        "reading": {
+          "dash": "[ --- | EDT | T15 | T20 | T30 ]",
+          "bar": "[ --- | EDT | T15 | T20 | T30 ]"
+        }
+      }
+    },
+    "octres": "[ 1/1 | 1/3 ]",
+    "min_trigger_level": "[ !float value! ]",
+    "report": {
+      "T30": "[ off | on ]",
+      "T20": "[ off | on ]",
+      "T15": "[ off | on ]",
+      "EDT": "[ off | on ]",
+      "audio": {
+        "mode": "[ off | on | markers only ]"
+      }
+    },
+    "measurement_series": "[ off | on ]"
+  },
+  "SI": {
+    "setting": {
+      "speaker_positions": "[ 1 | 2 | 3 | 4 ]",
+      "meas_duration": "[ 6s | 15s | 30s | 60s ]",
+      "rt": {
+        "mode": "[ T20 | T30 ]",
+        "min_trigger_level": "[ !float value! ]"
+      }
+    },
+    "project": {
+      "receiving_room_volume": "[ !float value! ]",
+      "sending_room_volume": "[ !float value! ]",
+      "common_area_size": "[ !float value! ]",
+      "angle_of_incidence": "[ !float value! ]"
+    },
+    "slm": {
+      "spectrum": {
+        "axis": {
+          "y": {
+            "start": "[ !float value! ]",
+            "resolution": "[ 20 dB/div | 10 dB/div | 5 dB/div | 2.5 dB/div ]"
+          }
+        }
+      }
+    }
+  }
+}

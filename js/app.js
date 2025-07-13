@@ -101,7 +101,16 @@ function renderJson(obj, container, currentPath = '', configOptions, level = 0) 
           input.step = '1';
           input.value = value;
           input.className = 'p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white w-32 flex-grow transition-colors';
-        } else if (pathOptions[0] === '!text value!') {
+        } else if (pathOptions[0] === '!signed int32 value!') {
+          input = document.createElement('input');
+          input.type = 'number';
+          input.min = '-2147483648';
+          input.max = '2147483647';
+          input.step = '1';
+          input.value = value;
+          input.className = 'p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white w-32 flex-grow transition-colors';
+        }
+        else if (pathOptions[0] === '!text value!') {
           input = document.createElement('input');
           input.type = 'text';
           input.value = value;
